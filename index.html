@@ -21,7 +21,16 @@
 	</div>
 	<div data-role = "content"
 	         align = "center">
-		
+
+		<!-- Allow user to select number of dice -->
+		<label for = "diceSlider">Number of Dice:</label>
+		<input type = "range"
+			   name = "diceSlider"
+				 id = "diceSlider"
+			  value = "1"
+			    min = "1"
+			    max = "20"></input>
+			 
 		<!-- Allow user to select type of dice rolled -->
 		<label for = "diceType" class = "select">
 			Type of Dice
@@ -40,10 +49,36 @@
 		<script>
 		function rollDice()
 		{
-			var numOfDice;
+			var numOfDice = document.getElementById("diceSlider").value;
 			var numOfSides = document.getElementById("diceType").value;
-			var diceRoll = Math.floor((Math.random() * numOfSides) + 1);
-			document.getElementById("diceResult").innerHTML = "You rolled a " + diceRoll + ".";
+			var totalResults = "";
+			var diceRoll = 0;
+			var diceTotal = 0;
+			for (var i = 1; i <= numOfDice; i++)
+			{
+				diceRoll = Math.floor((Math.random() * numOfSides) + 1);
+				diceTotal += diceRoll;
+				if (numOfDice == 1)
+				{
+					totalResults = diceRoll;
+				}
+				else if (i < numOfDice)
+				{
+					totalResults += diceRoll;
+					if (numOfDice > 2)
+					{
+						totalResults += ", ";
+					}
+				}
+				else
+				{
+					totalResults += " and " + diceRoll;
+				}
+			}
+			if (numOfDice == 1)
+				document.getElementById("diceResult").innerHTML = "You rolled a " + diceTotal + ".";
+			else
+				document.getElementById("diceResult").innerHTML = "You rolled a " + totalResults + " for a total of " + diceTotal + ".";
 		}
 	</script>
 
